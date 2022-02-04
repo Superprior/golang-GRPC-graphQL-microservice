@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "github.com/ese-erigha/movie-finder-microservices/protos/common";
+
+enum ResponseType {
+    SUCCESS = 0;
+    NOT_FOUND = 1;
+    UNAUTHORIZED = 2;
+    ERROR = 3;
+}
+  
+message ResponseError {
+    map<string, string> data = 1;
+}

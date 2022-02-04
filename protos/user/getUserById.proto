@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package user;
+option go_package = "github.com/ese-erigha/movie-finder-microservices/protos/user";
+
+import "common/response.proto";
+import "user/user.proto";
+
+message GetUserByIdRequest {
+    string id = 1;
+}
+
+message GetUserByIdData {
+  optional user.User user = 1;
+}
+
+message GetUserByIdResponse {
+    common.ResponseType type = 1;
+    optional string  message = 2;
+    optional GetUserByIdData data = 3;
+    optional common.ResponseError error = 4; 
+}

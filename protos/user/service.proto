@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "github.com/ese-erigha/movie-finder-microservices/protos/user";
+
+import "user/getUserById.proto";
+
+service UserService {
+  rpc getUserById (user.GetUserByIdRequest) returns (user.GetUserByIdResponse) {}
+}

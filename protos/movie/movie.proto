@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package movie;
+
+option go_package = "github.com/ese-erigha/movie-finder-microservices/protos/movie";
+
+import "movie/genre.proto";
+
+message Movie {
+  int64 id = 1; 
+  string title = 2;
+  repeated movie.Genre genres = 3;
+  string original_language = 4;
+  string original_title = 5;
+  string overview = 6;
+  int64 popularity = 7;
+  string poster_path = 8;
+  string release_date = 9;
+  bool adult = 10;
+  string backdrop_path = 11;
+  bool video = 12;
+  int64 vote_average = 13;
+  int64 vote_count = 14;
+  string tagline = 15;
+  int64 runtime = 16;
+  int64 budget = 17;
+}
