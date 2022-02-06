@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package user;
 
-option go_package = "github.com/ese-erigha/movie-finder-microservices/protos/user";
+option go_package = "github.com/ese-erigha/grpc-graphql-kubernetes-microservice/protos/user";
 
 import "user/getUserById.proto";
 

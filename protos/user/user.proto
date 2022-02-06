@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package user;
 
-option go_package = "github.com/ese-erigha/movie-finder-microservices/protos/user";
+option go_package = "github.com/ese-erigha/grpc-graphql-kubernetes-microservice/protos/user";
 
 message User {
     string id = 1;
     string email = 2;
-    string username = 3;
+    string name = 3;
     string password = 4;
 }
