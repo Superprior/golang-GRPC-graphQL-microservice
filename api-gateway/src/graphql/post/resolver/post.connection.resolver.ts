@@ -1,5 +1,5 @@
 import { Resolver, Query, Args, Ctx } from 'type-graphql';
-import { PaginationArgs } from '../../common/pagination';
+import { PaginationArgs } from '../../common/model/pagination';
 import { PostConnection } from '../model/post.connection.model';
 
 @Resolver((of) => PostConnection)

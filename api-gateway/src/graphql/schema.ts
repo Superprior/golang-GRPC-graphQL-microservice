@@ -5,7 +5,7 @@ import { UserResolver } from './user';
 import { CommentResolver } from './comment';
 import { AuthenticationResolver } from './authentication';
 import container from '../inversify/inversify.config';
-import { authChecker } from './authorizer';
+import { authChecker } from './middleware';
 
 export default async function buildGraphQLSchema(): Promise<GraphQLSchema> {
   const resolvers = [

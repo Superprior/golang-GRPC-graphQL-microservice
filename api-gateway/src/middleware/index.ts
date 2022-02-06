@@ -1,13 +1,15 @@
 import Express from 'express';
 import loggerMiddleware from './logger';
-import jwtParser from './jwt.parser';
+import jwtDecode from './jwt.decode';
+import authenticationErrorInterceptor from './auth.error.interceptor';
 import { GRAPHQL_PATH } from '../constants';
 
 export { logger } from './logger';
 
 const middleware = (app: Express.Application) => {
   app.use(loggerMiddleware);
-  app.use(GRAPHQL_PATH, jwtParser);
+  app.use(GRAPHQL_PATH, jwtDecode);
+  app.use(authenticationErrorInterceptor);
 };
 
 export default middleware;

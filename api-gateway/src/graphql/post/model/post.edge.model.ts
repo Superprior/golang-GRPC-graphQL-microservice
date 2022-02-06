@@ -1,5 +1,5 @@
 import { ObjectType } from 'type-graphql';
-import { EdgeResponse } from '../../common/pagination';
+import { EdgeResponse } from '../../common/model/pagination';
 import { Post } from './post.model';
 
 @ObjectType()
