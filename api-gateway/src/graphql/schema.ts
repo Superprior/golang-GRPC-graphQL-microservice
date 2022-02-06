@@ -1,22 +1,23 @@
-import { GraphQLSchema } from 'graphql';
 import { buildSchema } from 'type-graphql';
-import { Container } from 'typedi';
-import MovieConnectionResolver from './resolvers/movieConnection';
-import MovieListResolver from './resolvers/post';
-import MovieListConnectionResolver from './resolvers/movieListConnection';
-import UserResolver from './resolvers/user';
+import { GraphQLSchema } from 'graphql';
+import { PostConnectionResolver, PostResolver } from './post';
+import { UserResolver } from './user';
+import { CommentResolver } from './comment';
+import { AuthenticationResolver } from './authentication';
+import container from '../inversify/inversify.config';
 
 export default async function buildGraphQLSchema(): Promise<GraphQLSchema> {
   const resolvers = [
-    MovieListResolver,
-    MovieListConnectionResolver,
-    MovieConnectionResolver,
-    UserResolver
+    PostResolver,
+    PostConnectionResolver,
+    UserResolver,
+    CommentResolver,
+    AuthenticationResolver
   ] as const;
 
   const schema = await buildSchema({
     resolvers,
-    container: Container
+    container
   });
   return schema;
 }

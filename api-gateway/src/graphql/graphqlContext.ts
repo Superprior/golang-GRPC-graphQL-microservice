@@ -1,5 +1,6 @@
 import { ExpressContext } from 'apollo-server-express';
-import User from './models/user';
+import { logger } from '../middleware/logger';
+import { User } from './user';
 
 export interface GraphqlContext extends ExpressContext {
   user: User;
@@ -8,6 +9,8 @@ export interface GraphqlContext extends ExpressContext {
 export default class GraphQLContext {
   static build(appContext: ExpressContext) {
     const { req } = appContext;
+    logger.info('context user');
+    logger.info({ user: req.user });
     const context = {
       ...appContext,
       user: req.user // `req.user` comes from `express-jwt and contains the JWT decoded payload`

@@ -2,8 +2,7 @@ import 'reflect-metadata';
 import { ApolloServer } from 'apollo-server-express';
 import Express from 'express';
 import buildSchema from './graphql/schema';
-import middleware from './middleware';
-import { logger } from './middleware/logger';
+import middleware, { logger } from './middleware';
 import { GRAPHQL_PATH, IS_DEVELOPMENT, PORT } from './constants';
 import GraphQLContext from './graphql/graphqlContext';
 
@@ -20,14 +19,13 @@ const port = process.env.PORT || PORT;
 
   middleware(app);
   await apolloServer.start();
-  apolloServer.applyMiddleware({ app });
 
-  // Start the server
-  app.listen(port, () => {
-    logger.info(`🚀 Server is running at http://localhost:${port}`);
+  apolloServer.applyMiddleware({ app, path: GRAPHQL_PATH });
 
+  // Launch the express server
+  app.listen({ port }, () =>
     logger.info(
-      `🚀 GraphQL Server is running at http://localhost:${port}${GRAPHQL_PATH}`
-    );
-  });
+      `🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`
+    )
+  );
 })();
