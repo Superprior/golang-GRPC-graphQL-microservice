@@ -20,6 +20,9 @@ module.exports = {
     'prettier/prettier': 2, // Means error
     'no-unused-vars': 'off',
     'import/extensions': 'off',
-    'class-methods-use-this': 'off'
+    'class-methods-use-this': 'off',
+    'import/prefer-default-export': 'off',
+    'no-useless-constructor': 'off',
+    'no-console': 'off'
   }
 };

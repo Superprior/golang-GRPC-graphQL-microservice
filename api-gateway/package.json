@@ -4,7 +4,19 @@
   "description": "Node.js API GraphQL Gateway",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rimraf ./dist && tsc",
+    "dev": "nodemon",
+    "start": "npm run build && node dist/index.js",
+    "lint": "eslint . --ext .ts",
+    "prettier-format": "run-script-os",
+    "prettier-format:win32": "prettier --config .prettierrc \"./src/**/*.ts\" --write",
+    "prettier-format:darwin:linux": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "prettier-format:default": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "prettier-watch": "run-script-os",
+    "prettier-watch:win32": "onchange \"src/**/*.ts\" -- prettier --write {{changed}}",
+    "prettier-watch:darwin:linux": "onchange 'src/**/*.ts' -- prettier --write {{changed}}",
+    "prettier-watch:default": "onchange 'src/**/*.ts' -- prettier --write {{changed}}",
+    "test": "jest"
   },
   "keywords": [
     "node.js",
@@ -13,12 +25,16 @@
   ],
   "author": "Ese Erigha",
   "license": "ISC",
-   "devDependencies": {
+  "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/express-jwt": "^6.0.4",
+    "@types/express-pino-logger": "^4.0.3",
     "@types/jsonwebtoken": "^8.5.8",
+    "@types/node": "^17.0.15",
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
+    "@types/bcrypt": "^5.0.0",
+    "@types/dotenv": "^8.2.0",
     "eslint": "^8.7.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.3.0",
@@ -31,8 +47,6 @@
     "typescript": "^4.5.4"
   },
   "dependencies": {
-    "@types/bcrypt": "^5.0.0",
-    "@types/dotenv": "^8.2.0",
     "apollo-server": "^3.6.2",
     "apollo-server-express": "^3.6.2",
     "bcrypt": "^5.0.1",
@@ -40,9 +54,12 @@
     "dotenv": "^14.2.0",
     "express": "^4.17.2",
     "express-jwt": "^6.1.0",
+    "express-pino-logger": "^7.0.0",
     "graphql": "^15.8.0",
+    "inversify": "^6.0.1",
     "jsonwebtoken": "^8.5.1",
-    "pino-http": "^6.6.0",
+    "pino": "^7.6.5",
+    "pino-pretty": "^7.5.1",
     "reflect-metadata": "^0.1.13",
     "save-dev": "^0.0.1-security",
     "type-graphql": "^1.1.1",

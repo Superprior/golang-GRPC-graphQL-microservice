@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+      "types": ["reflect-metadata"],
       "module": "commonjs",
       "esModuleInterop": true,
       "target": "es2018",
