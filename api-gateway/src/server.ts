@@ -4,7 +4,7 @@ import Express from 'express';
 import buildSchema from './graphql/schema';
 import middleware, { logger } from './middleware';
 import { GRAPHQL_PATH, IS_DEVELOPMENT, PORT } from './constants';
-import GraphQLContext from './graphql/graphqlContext';
+import GraphQLContext from './graphql/graphql.context';
 
 const port = process.env.PORT || PORT;
 
