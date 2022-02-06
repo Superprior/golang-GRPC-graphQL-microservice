@@ -4,7 +4,6 @@ import { LoginInput } from './dto/login.input';
 import { RegisterInput } from './dto/register.input';
 import { IUserService, User } from '../user';
 import { hashPassword, comparePassword } from './password.helper';
-// import { logger } from '../../middleware/logger';
 import { IAuthenticationService } from './authentication.interface';
 import { TYPES } from '../../inversify/types';
 import { IJWTService } from './jwt.interface';
