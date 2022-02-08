@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import 'reflect-metadata';
 import { injectable } from 'inversify';
 import { User } from './user.model';

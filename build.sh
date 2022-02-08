@@ -33,22 +33,17 @@ set -e
 # pipenv lock -r > requirements.txt
 # popd
 
-
 packs=(
-    "common"
-    "movie"
-    "movielist"
+    "user"
 );
-
-proto_dest="./services/movieList/protos"
 
 # Generate go protobuf files for all protos
 for d in ${packs[@]} ; do
     echo "Compiling $d";
-    protoc -I protos \
-            --go_out="$proto_dest" --go_opt=paths=source_relative \
-            --go-grpc_out="$proto_dest" --go-grpc_opt=paths=source_relative \
-            protos/$d/*.proto
+    protoc -I $d-service \
+            --go_out="$d-service/$d" --go_opt=paths=source_relative \
+            --go-grpc_out="$d-service/$d" --go-grpc_opt=paths=source_relative \
+            $d-service/$d.proto
 done
 
 # Generate api definition with GRPC Gateway

@@ -1,0 +1,74 @@
+syntax = "proto3";
+package user;
+option go_package = "./;user";
+
+enum ResponseType {
+    SUCCESS = 0;
+    NOT_FOUND = 1;
+    UNAUTHORIZED = 2;
+    ERROR = 3;
+}
+  
+message ResponseError {
+    map<string, string> data = 1;
+}
+
+message User {
+    string id = 1;
+    string email = 2;
+    string name = 3;
+    string password = 4;
+}
+
+message CreateUserRequest {
+    string email = 1;
+    optional string name = 2;
+    string password = 3;
+}
+
+message CreateUserData {
+  optional User user = 1;
+}
+
+message CreateUserResponse {
+    ResponseType type = 1;
+    optional string  message = 2;
+    optional CreateUserData data = 3;
+    optional ResponseError error = 4; 
+}
+
+message GetUserByIdRequest {
+    string id = 1;
+}
+
+message GetUserByIdData {
+  optional User user = 1;
+}
+
+message GetUserByIdResponse {
+    ResponseType type = 1;
+    optional string  message = 2;
+    optional GetUserByIdData data = 3;
+    optional ResponseError error = 4; 
+}
+
+message GetUserByEmailRequest {
+    string email = 1;
+}
+
+message GetUserByEmailData {
+  optional User user = 1;
+}
+
+message GetUserByEmailResponse {
+    ResponseType type = 1;
+    optional string  message = 2;
+    optional GetUserByEmailData data = 3;
+    optional ResponseError error = 4; 
+}
+
+service UserService {
+  rpc GetUserById (GetUserByIdRequest) returns (GetUserByIdResponse) {}
+  rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {}
+  rpc GetUserByEmail (GetUserByEmailRequest) returns (GetUserByEmailResponse) {}
+}
