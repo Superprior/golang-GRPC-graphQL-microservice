@@ -4,7 +4,7 @@ import (
 	"log"
 	"net"
 
-	"github.com/ese-erigha/grpc-graphql-kubernetes-microservice/user"
+	"github.com/grpc-graphql-kubernetes-microservice/microservices/user-service/user"
 	"google.golang.org/grpc"
 )
 
