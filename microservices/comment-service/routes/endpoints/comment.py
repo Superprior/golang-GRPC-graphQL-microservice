@@ -9,6 +9,7 @@ router = APIRouter()
 def get_comments_for_post(post_id: str):
     list = []
     for i in range(0, 10):
-        comment = Comment(text="Comment "+str(i+1), postId=post_id)
+        itemId = str(i+1)
+        comment = Comment(id=itemId, text="Comment " + itemId, postId=post_id)
         list.append(comment)
     return list
