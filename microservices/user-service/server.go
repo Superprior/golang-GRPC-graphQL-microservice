@@ -24,6 +24,7 @@ func main() {
 	grpcServer := grpc.NewServer()
 
 	user.RegisterUserServiceServer(grpcServer, &userServer)
+	log.Print("Starting Server....")
 
 	if err := grpcServer.Serve(listener); err != nil {
 		log.Fatal(err)
