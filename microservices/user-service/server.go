@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net"
 
@@ -10,17 +11,21 @@ import (
 
 func main() {
 
-	listener, err := net.Listen("tcp", ":9000")
+	port := 9000
+
+	listener, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
+
 	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+		log.Fatal(err)
 	}
 
 	userServer := user.Server{}
 
 	grpcServer := grpc.NewServer()
+
 	user.RegisterUserServiceServer(grpcServer, &userServer)
 
 	if err := grpcServer.Serve(listener); err != nil {
-		log.Fatalf("failed to serve: %s", err)
+		log.Fatal(err)
 	}
 }
