@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { SALT } from '../../constants';
+import { SALT } from '../../config';
 
 export const hashPassword = async (password: string) =>
   bcrypt.hash(password, SALT);

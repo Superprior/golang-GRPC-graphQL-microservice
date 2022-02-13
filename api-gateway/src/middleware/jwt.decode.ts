@@ -1,5 +1,5 @@
 import jwt from 'express-jwt';
-import { JWT_ALGORITHM, SECRET_KEY } from '../constants';
+import { JWT_ALGORITHM, SECRET_KEY } from '../config';
 
 const jwtDecode = jwt({
   secret: SECRET_KEY,
