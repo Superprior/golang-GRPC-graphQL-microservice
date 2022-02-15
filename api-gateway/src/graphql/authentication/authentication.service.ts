@@ -1,26 +1,18 @@
-import 'reflect-metadata';
-import { inject, injectable } from 'inversify';
+/* eslint-disable no-empty-function */
+import { Service } from 'typedi';
 import { LoginInput } from './dto/login.input';
 import { RegisterInput } from './dto/register.input';
-import { IUserService, User } from '../user';
+import { User, UserService } from '../user';
 import { hashPassword, comparePassword } from './password.helper';
 import { IAuthenticationService } from './authentication.interface';
-import { TYPES } from '../../inversify/types';
-import { IJWTService } from './jwt.interface';
+import { JWTService } from './jwt.service';
 
-@injectable()
+@Service()
 export class AuthenticationService implements IAuthenticationService {
-  private jwtService: IJWTService;
-
-  private userService: IUserService;
-
   constructor(
-    @inject(TYPES.IJWTService) jwtService: IJWTService,
-    @inject(TYPES.IUserService) userService: IUserService
-  ) {
-    this.jwtService = jwtService;
-    this.userService = userService;
-  }
+    private readonly jwtService: JWTService,
+    private readonly userService: UserService
+  ) {}
 
   async register(input: RegisterInput): Promise<User> {
     const user = await this.userService.findOneByEmail(input.email);

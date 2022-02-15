@@ -1,17 +1,15 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { inject, injectable } from 'inversify';
+import { Service } from 'typedi';
 import { Arg, Resolver, Query, Authorized } from 'type-graphql';
-import { TYPES } from '../../inversify/types';
+import { UserService } from './user.service';
 import { User } from './user.model';
-import { IUserService } from './user.interface';
 import { UserResultUnion } from './unions';
 
-@injectable()
+@Service()
 @Resolver((of) => User)
 export class UserResolver {
-  private userService: IUserService;
-
-  constructor(@inject(TYPES.IUserService) userService: IUserService) {
+  constructor(private readonly userService: UserService) {
     this.userService = userService;
   }
 

@@ -1,13 +1,12 @@
 /* eslint-disable import/no-cycle */
-import 'reflect-metadata';
-import { injectable } from 'inversify';
+import { Service } from 'typedi';
 import { User } from './user.model';
 import { IUserService } from './user.interface';
 import { UserCreateDto } from './user.dto';
 
 const usersInDatabase = [];
 
-@injectable()
+@Service()
 export class UserService implements IUserService {
   async findOneById(id: string) {
     return usersInDatabase.find((user) => user.id === id) as User;

@@ -1,6 +1,8 @@
 import { Resolver, Query, Arg, ID } from 'type-graphql';
+import { Service } from 'typedi';
 import { Post } from '../model/post.model';
 
+@Service()
 @Resolver((of) => Post)
 export class PostResolver {
   @Query((returns) => Post)

@@ -1,6 +1,8 @@
-import { Resolver, Query, Args, Arg, ID, Mutation } from 'type-graphql';
+import { Resolver, Query, Arg, ID } from 'type-graphql';
+import { Service } from 'typedi';
 import { Comment } from './comment.model';
 
+@Service()
 @Resolver((of) => Comment)
 export class CommentResolver {
   @Query((returns) => [Comment])

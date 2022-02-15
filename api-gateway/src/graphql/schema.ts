@@ -1,10 +1,10 @@
 import { buildSchema } from 'type-graphql';
 import { GraphQLSchema } from 'graphql';
+import { Container } from 'typedi';
 import { PostConnectionResolver, PostResolver } from './post';
 import { UserResolver } from './user';
 import { CommentResolver } from './comment';
 import { AuthenticationResolver } from './authentication';
-import container from '../inversify/inversify.config';
 import { authChecker } from './middleware';
 
 export default async function buildGraphQLSchema(): Promise<GraphQLSchema> {
@@ -18,7 +18,7 @@ export default async function buildGraphQLSchema(): Promise<GraphQLSchema> {
 
   const schema = await buildSchema({
     resolvers,
-    container,
+    container: Container,
     authChecker
   });
   return schema;
