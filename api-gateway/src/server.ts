@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import 'dotenv/config';
 import { ApolloServer } from 'apollo-server-express';
+import { ApolloServerLoaderPlugin } from 'type-graphql-dataloader';
 import Express from 'express';
 import buildSchema from './graphql/schema';
 import middleware, { logger } from './middleware';
@@ -14,6 +15,7 @@ const port = PORT;
   const app = Express();
   const apolloServer = new ApolloServer({
     schema,
+    plugins: [ApolloServerLoaderPlugin({})],
     introspection: IS_DEVELOPMENT,
     context: (ctx) => GraphQLContext.build(ctx)
   });
