@@ -4,7 +4,7 @@ import { Comment } from './comment.model';
 
 @Service()
 export class CommentService implements ICommentService {
-  async commentsForBulkPostId(postIds: string[]): Promise<Comment[]> {
+  async commentsForPosts(postIds: string[]): Promise<Comment[]> {
     return [
       {
         id: 'COMMENT_ID_1',

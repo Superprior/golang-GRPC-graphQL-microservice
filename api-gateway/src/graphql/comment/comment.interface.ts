@@ -1,5 +1,5 @@
 import { Comment } from './comment.model';
 
 export interface ICommentService {
-  commentsForBulkPostId: (postIds: string[]) => Promise<Comment[]>;
+  commentsForPosts: (postIds: string[]) => Promise<Comment[]>;
 }

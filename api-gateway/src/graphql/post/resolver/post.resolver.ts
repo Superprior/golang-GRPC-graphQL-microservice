@@ -40,7 +40,7 @@ export class PostResolver {
 
   @FieldResolver()
   @Loader<string, any>(async (ids, { context }) => {
-    const postComments = await commentServiceRef.commentsForBulkPostId(
+    const postComments = await commentServiceRef.commentsForPosts(
       ids as string[]
     );
     const commentsById = groupBy(postComments, 'postId');
