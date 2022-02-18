@@ -5,37 +5,34 @@ import { Loader } from 'type-graphql-dataloader';
 import groupBy from 'lodash.groupby';
 import { Comment, CommentService } from '../../comment';
 import { Post } from '../model/post.model';
+import { PostService } from '../post.service';
+import { PostResultUnion } from '../post.unions';
 
 let commentServiceRef: CommentService;
 
 @Service()
 @Resolver((of) => Post)
 export class PostResolver {
-  constructor(commentService: CommentService) {
+  constructor(
+    private readonly postService: PostService,
+    commentService: CommentService
+  ) {
     commentServiceRef = commentService;
   }
 
   @Query((returns) => [Post])
   async posts(@Arg('userId', (type) => ID) userId: string): Promise<Post[]> {
-    return [
-      {
-        id: 'POST_ID_1',
-        userId: 'USER_ID',
-        title: 'TITLE_1',
-        body: 'BODY_1'
-      } as Post,
-      {
-        id: 'POST_ID_2',
-        userId: 'USER_ID',
-        title: 'TITLE_2',
-        body: 'BODY_2'
-      } as Post
-    ];
+    const posts = await this.postService.getAllPostsByUser(userId);
+    return posts;
   }
 
-  @Query((returns) => Post)
-  post(@Arg('id', (type) => ID) id: string): Post {
-    return {} as Post;
+  @Query((returns) => PostResultUnion)
+  async post(
+    @Arg('id', (type) => ID) id: string
+  ): Promise<typeof PostResultUnion> {
+    const post = await this.postService.getPostById(id);
+    if (post) return post;
+    return { code: '10', message: 'Post not found!' };
   }
 
   @FieldResolver()

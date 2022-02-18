@@ -5,3 +5,4 @@ class Comment(BaseModel):
     id: str
     text: str
     postId: str
+    authorId: str

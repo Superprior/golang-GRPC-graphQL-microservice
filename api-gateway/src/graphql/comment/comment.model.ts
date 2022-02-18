@@ -13,10 +13,4 @@ export class Comment {
 
   @Field((type) => String)
   postId: string;
-
-  @Field((type) => Number)
-  createdAt: number;
-
-  @Field((type) => Number)
-  updatedAt: number;
 }

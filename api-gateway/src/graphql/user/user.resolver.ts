@@ -4,7 +4,7 @@ import { Service } from 'typedi';
 import { Arg, Resolver, Query, Authorized } from 'type-graphql';
 import { UserService } from './user.service';
 import { User } from './user.model';
-import { UserResultUnion } from './unions';
+import { UserResultUnion } from './user.unions';
 
 @Service()
 @Resolver((of) => User)

@@ -17,7 +17,8 @@ def get_comments_for_posts(bulkPostInput: BulkPostInput):
     list = []
     for i in range(0, len(postIds)):
         id = str(i+1)
-        itemId = "POST_ID_"+id
-        comment = Comment(id=itemId, text="Comment "+id, postId=postIds[i])
+        itemId = "COMMENT_ID_"+id
+        comment = Comment(id=itemId, text="Comment "+id,
+                          postId=postIds[i], authorId="user_id")
         list.append(comment)
     return list

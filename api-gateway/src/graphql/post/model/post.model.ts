@@ -12,15 +12,6 @@ export class Post {
   @Field((type) => String)
   body: string;
 
-  @Field((type) => Boolean)
-  published: boolean;
-
-  @Field((type) => Number)
-  createdAt: number;
-
-  @Field((type) => Number)
-  updatedAt: number;
-
   @Field((type) => String)
   userId: string;
 
