@@ -8,6 +8,7 @@ type IConfig = {
   PORT: number;
   POST_SERVICE_URL: string;
   COMMENT_SERVICE_URL: string;
+  USER_SERVICE_URL: string;
 };
 
 class EnvReader {
@@ -21,7 +22,8 @@ class EnvReader {
       IS_DEVELOPMENT: Boolean(process.env.IS_DEVELOPMENT),
       PORT: process.env.PORT ? parseInt(process.env.PORT, 10) : null,
       POST_SERVICE_URL: process.env.POST_SERVICE_URL,
-      COMMENT_SERVICE_URL: process.env.COMMENT_SERVICE_URL
+      COMMENT_SERVICE_URL: process.env.COMMENT_SERVICE_URL,
+      USER_SERVICE_URL: process.env.USER_SERVICE_URL
     };
 
     Object.keys(config).forEach((key) => {
@@ -46,3 +48,4 @@ export const { IS_DEVELOPMENT } = configuration;
 export const { PORT } = configuration;
 export const { POST_SERVICE_URL } = configuration;
 export const { COMMENT_SERVICE_URL } = configuration;
+export const { USER_SERVICE_URL } = configuration;

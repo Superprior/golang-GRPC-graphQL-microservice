@@ -1,5 +1,5 @@
-import { LoginInput } from './dto/login.input';
-import { RegisterInput } from './dto/register.input';
+import { LoginInput } from './input/login.input';
+import { RegisterInput } from './input/register.input';
 import { User } from '../user';
 
 export interface IAuthenticationService {

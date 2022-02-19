@@ -1,9 +1,9 @@
-import { ObjectType, Field } from 'type-graphql';
+import { ObjectType, Field, Int } from 'type-graphql';
 
 @ObjectType()
-export class ErrorResponse {
-  @Field((type) => String)
-  code: string;
+export class AppError {
+  @Field((type) => Int)
+  code: number;
 
   @Field((type) => String)
   message: string;

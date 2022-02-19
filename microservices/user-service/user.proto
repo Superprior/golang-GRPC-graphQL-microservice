@@ -20,7 +20,7 @@ message CreateUserRequest {
 }
 
 message CreateUserData {
-  optional User user = 1;
+  User user = 1;
 }
 
 message CreateUserResponse {

@@ -6,7 +6,7 @@ import groupBy from 'lodash.groupby';
 import { Comment, CommentService } from '../../comment';
 import { Post } from '../model/post.model';
 import { PostService } from '../post.service';
-import { PostResultUnion } from '../post.unions';
+import { PostResponse } from '../post.unions';
 
 let commentServiceRef: CommentService;
 
@@ -26,13 +26,13 @@ export class PostResolver {
     return posts;
   }
 
-  @Query((returns) => PostResultUnion)
+  @Query((returns) => PostResponse)
   async post(
     @Arg('id', (type) => ID) id: string
-  ): Promise<typeof PostResultUnion> {
+  ): Promise<typeof PostResponse> {
     const post = await this.postService.getPostById(id);
     if (post) return post;
-    return { code: '10', message: 'Post not found!' };
+    return { code: 404, message: 'Post not found!' };
   }
 
   @FieldResolver()
