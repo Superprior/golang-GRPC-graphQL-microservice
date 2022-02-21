@@ -2,7 +2,7 @@ import { Service } from 'typedi';
 import { Post } from './model/post.model';
 import { IPostService } from './post.interface';
 import { POST_SERVICE_URL } from '../../config';
-import { HttpClient } from '../../middleware/http.client';
+import { HttpClient } from '../service/http.service';
 
 @Service()
 export class PostService implements IPostService {

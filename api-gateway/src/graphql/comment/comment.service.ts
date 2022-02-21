@@ -1,5 +1,5 @@
 import { Service } from 'typedi';
-import { HttpClient } from '../../middleware/http.client';
+import { HttpClient } from '../service/http.service';
 import { ICommentService } from './comment.interface';
 import { Comment } from './comment.model';
 import { COMMENT_SERVICE_URL } from '../../config';
