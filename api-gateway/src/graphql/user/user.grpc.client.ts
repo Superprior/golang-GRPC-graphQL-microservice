@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import * as protoLoader from '@grpc/proto-loader';
 import * as grpcLibrary from '@grpc/grpc-js';
+import path from 'path';
 import Bluebird, { Promise } from 'bluebird';
 import { ProtoGrpcType } from './proto/user';
 import { USER_SERVICE_URL } from '../../config';
@@ -11,7 +12,7 @@ import { GetUserByEmailResponse__Output } from './proto/user/GetUserByEmailRespo
 import { CreateUserRequest } from './proto/user/CreateUserRequest';
 import { CreateUserResponse__Output } from './proto/user/CreateUserResponse';
 
-const PROTO_PATH = `${__dirname}../../../../protobuf/user.proto`;
+const PROTO_PATH = path.join(__dirname, '../../protobuf/user.proto');
 const protoLoaderConfig: protoLoader.Options = {
   keepCase: true,
   longs: String,

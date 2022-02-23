@@ -4,8 +4,9 @@
   "description": "Node.js API GraphQL Gateway",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf ./dist && tsc",
+    "build": "rimraf ./dist && tsc && yarn copy-files",
     "dev": "yarn run build:proto && nodemon",
+    "docker": "nodemon",
     "prod": "node dist/server.js",
     "start": "yarn run build:proto && yarn run build && node dist/server.js",
     "lint": "eslint . --ext .ts",
@@ -20,7 +21,8 @@
     "test": "jest",
     "create:proto:dir": "(cd src && mkdir -p protobuf)",
     "copy:proto": "(cp ../microservices/user-service/user.proto src/protobuf)",
-    "build:proto": "yarn run create:proto:dir && yarn run copy:proto && sh proto-node.sh"
+    "build:proto": "yarn run create:proto:dir && yarn run copy:proto && sh proto-node.sh",
+    "copy-files": "cp -r src/protobuf dist"
   },
   "keywords": [
     "node.js",
