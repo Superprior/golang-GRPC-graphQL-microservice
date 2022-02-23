@@ -1,4 +1,4 @@
-// Original file: ../microservices/user-service/user.proto
+// Original file: src/protobuf/user.proto
 
 import type { CreateUserData as _user_CreateUserData, CreateUserData__Output as _user_CreateUserData__Output } from '../user/CreateUserData';
 import type { ResponseError as _user_ResponseError, ResponseError__Output as _user_ResponseError__Output } from '../user/ResponseError';

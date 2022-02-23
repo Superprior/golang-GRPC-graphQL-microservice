@@ -1,4 +1,4 @@
-// Original file: ../microservices/user-service/user.proto
+// Original file: src/protobuf/user.proto
 
 import type { GetUserByEmailData as _user_GetUserByEmailData, GetUserByEmailData__Output as _user_GetUserByEmailData__Output } from '../user/GetUserByEmailData';
 import type { ResponseError as _user_ResponseError, ResponseError__Output as _user_ResponseError__Output } from '../user/ResponseError';

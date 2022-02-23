@@ -1,4 +1,4 @@
-// Original file: ../microservices/user-service/user.proto
+// Original file: src/protobuf/user.proto
 
 import type { User as _user_User, User__Output as _user_User__Output } from '../user/User';
 

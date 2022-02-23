@@ -1,4 +1,4 @@
-// Original file: ../microservices/user-service/user.proto
+// Original file: src/protobuf/user.proto
 
 
 export interface CreateUserRequest {

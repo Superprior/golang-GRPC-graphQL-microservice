@@ -9,6 +9,7 @@ import GraphQLContext from './graphql/graphql.context';
 import { PORT, IS_DEVELOPMENT, GRAPHQL_PATH } from './config';
 
 const port = PORT;
+const hostname = '0.0.0.0';
 
 (async () => {
   const schema = await buildSchema();
@@ -26,7 +27,7 @@ const port = PORT;
   apolloServer.applyMiddleware({ app, path: GRAPHQL_PATH });
 
   // Launch the express server
-  app.listen({ port }, () =>
+  app.listen(port, hostname, () =>
     logger.info(
       `🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`
     )

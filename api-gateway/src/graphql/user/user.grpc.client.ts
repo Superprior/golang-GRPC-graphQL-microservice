@@ -11,7 +11,7 @@ import { GetUserByEmailResponse__Output } from './proto/user/GetUserByEmailRespo
 import { CreateUserRequest } from './proto/user/CreateUserRequest';
 import { CreateUserResponse__Output } from './proto/user/CreateUserResponse';
 
-const PROTO_PATH = `${__dirname}../../../../../microservices/user-service/user.proto`;
+const PROTO_PATH = `${__dirname}../../../../protobuf/user.proto`;
 const protoLoaderConfig: protoLoader.Options = {
   keepCase: true,
   longs: String,

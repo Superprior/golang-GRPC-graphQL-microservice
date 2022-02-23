@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "rimraf ./dist && tsc",
-    "dev": "nodemon",
-    "start": "npm run build && node dist/index.js",
+    "dev": "yarn run build:proto && nodemon",
+    "prod": "node dist/server.js",
+    "start": "yarn run build:proto && yarn run build && node dist/server.js",
     "lint": "eslint . --ext .ts",
     "prettier-format": "run-script-os",
     "prettier-format:win32": "prettier --config .prettierrc \"./src/**/*.ts\" --write",
@@ -17,7 +18,9 @@
     "prettier-watch:darwin:linux": "onchange 'src/**/*.ts' -- prettier --write {{changed}}",
     "prettier-watch:default": "onchange 'src/**/*.ts' -- prettier --write {{changed}}",
     "test": "jest",
-    "build:proto": "sh proto-node.sh"
+    "create:proto:dir": "(cd src && mkdir -p protobuf)",
+    "copy:proto": "(cp ../microservices/user-service/user.proto src/protobuf)",
+    "build:proto": "yarn run create:proto:dir && yarn run copy:proto && sh proto-node.sh"
   },
   "keywords": [
     "node.js",
@@ -44,10 +47,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-prettier": "^4.0.0",
     "nodemon": "^2.0.15",
-    "prettier": "^2.5.1",
-    "rimraf": "^3.0.2",
-    "ts-node": "^10.4.0",
-    "typescript": "^4.5.4"
+    "prettier": "^2.5.1"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.5.5",
@@ -73,6 +73,9 @@
     "type-graphql": "^1.1.1",
     "type-graphql-dataloader": "^0.5.0",
     "typedi": "^0.10.0",
-    "typeorm": "^0.2.43"
+    "typeorm": "^0.2.43",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
   }
 }
