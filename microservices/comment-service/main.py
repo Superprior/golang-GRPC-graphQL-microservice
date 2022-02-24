@@ -23,3 +23,8 @@ if __name__ == "__main__":
 # https://fastapi.tiangolo.com/uk/deployment/docker/#build-a-docker-image-for-fastapi
 # Start with the url below because it conforms the service project folder
 # https://fastapi.tiangolo.com/uk/deployment/docker/#build-a-docker-image-with-a-single-file-fastapi
+
+# pip uninstall -r requirements.txt -y
+# pip uninstall -y -r <(pip freeze)
+
+# pip3 freeze > requirements.txt

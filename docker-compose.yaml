@@ -1,16 +1,27 @@
 version: "3.8"
 services:
-  gateway:
+  api-gateway:
     container_name: api-gateway
     build:
       context: ./api-gateway
       dockerfile: Dockerfile
     env_file: ./api-gateway/.env
     ports: 
-      - "9000:9000"
+      - "9000:3000"
     volumes:
       - './api-gateway:/usr/src/gateway'
       - /usr/src/gateway/node_modules
+    networks:
+      - microservices-network
+    depends_on:
+      - comment-service
+  comment-service:
+    container_name: comment-service
+    build:
+      context: ./microservices/comment-service
+      dockerfile: Dockerfile
+    ports:
+      - "9003:9003"
     networks:
       - microservices-network
 

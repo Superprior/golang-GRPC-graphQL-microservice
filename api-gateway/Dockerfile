@@ -20,7 +20,8 @@ RUN yarn install --frozen-lockfile
 
 COPY . $APP_HOME
 
-EXPOSE 9000
+# Expose not needed as it is overidden in ports section of docker-compose.yml
+# EXPOSE 3000
 
 CMD [ "yarn", "docker" ]
 
