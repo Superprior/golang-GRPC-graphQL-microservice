@@ -23,7 +23,7 @@ services:
       context: ./microservices/comment-service
       dockerfile: Dockerfile
     ports:
-      - "9003:9003"
+      - "9003:3003"
     networks:
       - microservices-network
 
@@ -33,7 +33,7 @@ services:
       context: ./microservices/post-service
       dockerfile: Dockerfile
     ports:
-      - "9002:9002"
+      - "9002:3002"
     networks:
       - microservices-network
 
@@ -43,7 +43,7 @@ services:
       context: ./microservices/user-service
       dockerfile: Dockerfile
     ports:
-      - "9001:9001"
+      - "9001:3001"
     networks:
       - microservices-network
 

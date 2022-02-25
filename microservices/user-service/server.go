@@ -11,7 +11,7 @@ import (
 
 func main() {
 
-	port := 9001
+	port := 3001
 
 	listener, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 
