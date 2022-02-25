@@ -14,8 +14,9 @@ services:
     networks:
       - microservices-network
     depends_on:
-      - comment-service
+      - user-service
       - post-service
+      - comment-service
   comment-service:
     container_name: comment-service
     build:
@@ -33,6 +34,16 @@ services:
       dockerfile: Dockerfile
     ports:
       - "9002:9002"
+    networks:
+      - microservices-network
+
+  user-service:
+    container_name: user-service
+    build:
+      context: ./microservices/user-service
+      dockerfile: Dockerfile
+    ports:
+      - "9001:9001"
     networks:
       - microservices-network
 
