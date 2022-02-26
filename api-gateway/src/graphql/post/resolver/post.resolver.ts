@@ -1,4 +1,12 @@
-import { Resolver, Query, Arg, ID, FieldResolver, Root } from 'type-graphql';
+import {
+  Resolver,
+  Query,
+  Arg,
+  ID,
+  FieldResolver,
+  Root,
+  Authorized
+} from 'type-graphql';
 import { Service } from 'typedi';
 import DataLoader from 'dataloader';
 import { Loader } from 'type-graphql-dataloader';
@@ -20,12 +28,14 @@ export class PostResolver {
     commentServiceRef = commentService;
   }
 
+  @Authorized()
   @Query((returns) => [Post])
   async posts(@Arg('userId', (type) => ID) userId: string): Promise<Post[]> {
     const posts = await this.postService.getAllPostsByUser(userId);
     return posts;
   }
 
+  @Authorized()
   @Query((returns) => PostResponse)
   async post(
     @Arg('id', (type) => ID) id: string
@@ -35,6 +45,7 @@ export class PostResolver {
     return { code: 404, message: 'Post not found!' };
   }
 
+  @Authorized()
   @FieldResolver()
   @Loader<string, any>(async (ids, { context }) => {
     const postComments = await commentServiceRef.commentsForPosts(

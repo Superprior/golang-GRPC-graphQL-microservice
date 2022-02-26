@@ -12,7 +12,7 @@ export class UserResolver {
     this.userService = userService;
   }
 
-  // @Authorized()
+  @Authorized()
   @Query((returns) => UserResponse)
   async user(@Arg('id') id: string): Promise<typeof UserResponse> {
     const user = await this.userService.getById(id);
