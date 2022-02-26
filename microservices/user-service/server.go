@@ -30,3 +30,5 @@ func main() {
 		log.Fatal(err)
 	}
 }
+
+// go run server.go
