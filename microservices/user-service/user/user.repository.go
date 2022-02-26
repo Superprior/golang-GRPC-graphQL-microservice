@@ -18,7 +18,7 @@ type IUserRepository interface {
 
 type UserRepository struct{}
 
-var users []UserDto
+var users []UserDto = []UserDto{}
 
 func (userRepository UserRepository) CreateUser(input CreateUserInput) UserDto {
 	user := UserDto{id: uuid.New().String(), name: input.name, email: input.email, password: input.password}

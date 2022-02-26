@@ -29,7 +29,7 @@ func (s *Server) GetUserById(ctx context.Context, input *GetUserByIdRequest) (*G
 
 func (s *Server) GetUserByEmail(ctx context.Context, input *GetUserByEmailRequest) (*GetUserByEmailResponse, error) {
 	log.Println("GetUserByEmail Called")
-	user := UserRepository{}.GetUserById(input.Email)
+	user := UserRepository{}.GetUserByEmail(input.Email)
 	if user.IsEmpty() {
 		return &GetUserByEmailResponse{Data: &GetUserByEmailData{}}, nil
 	}
