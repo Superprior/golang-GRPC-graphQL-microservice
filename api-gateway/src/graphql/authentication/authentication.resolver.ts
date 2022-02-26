@@ -20,7 +20,8 @@ export class AuthenticationResolver {
     @Arg('input') input: RegisterInput
   ): Promise<typeof RegisterResponse> {
     try {
-      return this.authenticationService.register(input);
+      const user = await this.authenticationService.register(input);
+      return user;
     } catch (err) {
       const error = { message: err.message };
       if (err instanceof DuplicateUserError) {
