@@ -30,7 +30,7 @@ WORKDIR /usr/src/user-service
 RUN cp /usr/src/temp/server .
 
 # Export necessary port
-#EXPOSE 3000
+EXPOSE 3001
 
 # Command to run when starting the container
 CMD ["/usr/src/user-service/server"]

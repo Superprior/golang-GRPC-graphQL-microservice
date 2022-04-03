@@ -1,0 +1,21 @@
+config:
+  aws:region: eu-west-2
+  grpc-graphql-kubernetes-microservice:user_service_container_port: 3001
+  grpc-graphql-kubernetes-microservice:user_service_host_port: 9001
+  grpc-graphql-kubernetes-microservice:post_service_container_port: 3002
+  grpc-graphql-kubernetes-microservice:post_service_host_port: 9002
+  grpc-graphql-kubernetes-microservice:comment_service_container_port: 3003
+  grpc-graphql-kubernetes-microservice:comment_service_host_port: 9003
+  grpc-graphql-kubernetes-microservice:gateway_service_container_port: 3000
+  grpc-graphql-kubernetes-microservice:gateway_service_host_port: 9000
+  grpc-graphql-kubernetes-microservice:graphql_path: "/graphql"
+  grpc-graphql-kubernetes-microservice:salt_rounds: 5
+  grpc-graphql-kubernetes-microservice:secret_key: "PRIVATE_KEY"
+  grpc-graphql-kubernetes-microservice:jwt_algorithm: "HS256"
+  grpc-graphql-kubernetes-microservice:jwt_expiration: "21d"
+  grpc-graphql-kubernetes-microservice:is_development: true
+  grpc-graphql-kubernetes-microservice:gateway_port: 3000
+  grpc-graphql-kubernetes-microservice:user_service_url: "user-service:3001"
+  grpc-graphql-kubernetes-microservice:post_service_url: "http://post-service:3002"
+  grpc-graphql-kubernetes-microservice:post_service_url: "http://comment-service:3003"
+  
