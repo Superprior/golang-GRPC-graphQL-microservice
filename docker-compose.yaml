@@ -2,6 +2,7 @@ version: "3.8"
 services:
   api-gateway:
     container_name: api-gateway
+    image: api-gateway
     build:
       context: ./api-gateway
       dockerfile: Dockerfile
@@ -9,8 +10,8 @@ services:
     ports: 
       - "9000:3000"
     volumes:
-      - './api-gateway:/usr/src/gateway'
-      - /usr/src/gateway/node_modules
+      # - ./api-gateway:/usr/src/gateway
+      - gateway-node-modules: /usr/src/gateway/node_modules
     networks:
       - microservices-network
     depends_on:
@@ -19,6 +20,7 @@ services:
       - comment-service
   comment-service:
     container_name: comment-service
+    image: comment-service
     build:
       context: ./microservices/comment-service
       dockerfile: Dockerfile
@@ -29,6 +31,7 @@ services:
 
   post-service:
     container_name: post-service
+    image: post-service
     build:
       context: ./microservices/post-service
       dockerfile: Dockerfile
@@ -39,6 +42,7 @@ services:
 
   user-service:
     container_name: user-service
+    image: user-service
     build:
       context: ./microservices/user-service
       dockerfile: Dockerfile
@@ -49,3 +53,7 @@ services:
 
 networks:
   microservices-network:
+
+volumes:
+  gateway-node-modules:
+
