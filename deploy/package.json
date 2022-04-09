@@ -1,0 +1,12 @@
+{
+    "name": "project-tango",
+    "devDependencies": {
+        "@types/node": "^17.0.23"
+    },
+    "dependencies": {
+        "@pulumi/aws": "^5.0.0",
+        "@pulumi/awsx": "^0.40.0",
+        "@pulumi/kubernetes": "^3.18.2",
+        "@pulumi/pulumi": "^3.0.0"
+    }
+}
