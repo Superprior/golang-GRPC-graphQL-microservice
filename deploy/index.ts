@@ -1,7 +1,7 @@
 import * as pulumi from '@pulumi/pulumi';
-import * as k8s from "@pulumi/kubernetes";
 import Image from './docker/image';
 import AwsEcr from './aws/ecr';
+import { UserService, PostService, CommentService, GatewayService } from './kubernetes';
 import { ImageName, ImageType, StackInput } from './types';
 
 const ecrRepo = AwsEcr.buildRepository('project-tango');
@@ -17,24 +17,10 @@ const commentServiceImage =  Image.build({ ...stackInput, name: ImageName.COMMEN
 const postServiceImage =  Image.build({ ...stackInput, name: ImageName.POST_SERVICE, type: ImageType.MICROSERVICE });
 const gatewayServiceImage =  Image.build({ ...stackInput, name: ImageName.GATEWAY_SERVICE, type: ImageType.GATEWAY });
 
-
-const appLabels = { app: "myapp" };
-const appDep = new k8s.apps.v1.Deployment("app-dep", {
-    spec: {
-        selector: { matchLabels: appLabels },
-        replicas: 3,
-        template: {
-            metadata: { labels: appLabels },
-            spec: {
-                containers: [{
-                    name: ImageName.USER_SERVICE,
-                    image: userServiceImage.imageName,
-                    imagePullPolicy: 'Always'
-                }],
-            },
-        },
-    },
-});
+const userService = new UserService(userServiceImage).build();
+const postService = new PostService(postServiceImage).build();
+const commentService = new CommentService(commentServiceImage).build();
+const gatewayService = new GatewayService(gatewayServiceImage).build();
 
 
 

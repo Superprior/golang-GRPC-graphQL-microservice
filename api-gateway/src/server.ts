@@ -6,7 +6,7 @@ import Express from 'express';
 import buildSchema from './graphql/schema';
 import middleware, { logger } from './middleware';
 import GraphQLContext from './graphql/graphql.context';
-import { PORT, IS_DEVELOPMENT, GRAPHQL_PATH } from './config';
+import { PORT, NODE_ENV, GRAPHQL_PATH } from './config';
 
 const port = PORT;
 const hostname = '0.0.0.0';
@@ -17,7 +17,7 @@ const hostname = '0.0.0.0';
   const apolloServer = new ApolloServer({
     schema,
     plugins: [ApolloServerLoaderPlugin({})],
-    introspection: IS_DEVELOPMENT,
+    introspection: NODE_ENV === 'development',
     context: (ctx) => GraphQLContext.build(ctx)
   });
 

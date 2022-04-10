@@ -1,5 +1,5 @@
 import * as aws from "@pulumi/aws";
-import { ImageName } from '../../docker/image';
+import { ImageName } from "../../types";
 
 const buildRepositoryPolicy = (repo: aws.ecr.Repository) => {
     // Set a use policy for the repository

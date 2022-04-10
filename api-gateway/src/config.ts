@@ -4,7 +4,7 @@ type IConfig = {
   SECRET_KEY: string;
   JWT_ALGORITHM: string;
   JWT_EXPIRATION: string;
-  IS_DEVELOPMENT: boolean;
+  NODE_ENV: string;
   PORT: number;
   POST_SERVICE_URL: string;
   COMMENT_SERVICE_URL: string;
@@ -19,7 +19,7 @@ class EnvReader {
       SECRET_KEY: process.env.SECRET_KEY,
       JWT_ALGORITHM: process.env.JWT_ALGORITHM,
       JWT_EXPIRATION: process.env.JWT_EXPIRATION,
-      IS_DEVELOPMENT: Boolean(process.env.IS_DEVELOPMENT),
+      NODE_ENV: process.env.NODE_ENV,
       PORT: process.env.PORT ? parseInt(process.env.PORT, 10) : null,
       POST_SERVICE_URL: process.env.POST_SERVICE_URL,
       COMMENT_SERVICE_URL: process.env.COMMENT_SERVICE_URL,
@@ -44,7 +44,7 @@ export const { SALT } = configuration;
 export const { SECRET_KEY } = configuration;
 export const { JWT_ALGORITHM } = configuration;
 export const { JWT_EXPIRATION } = configuration;
-export const { IS_DEVELOPMENT } = configuration;
+export const { NODE_ENV } = configuration;
 export const { PORT } = configuration;
 export const { POST_SERVICE_URL } = configuration;
 export const { COMMENT_SERVICE_URL } = configuration;
