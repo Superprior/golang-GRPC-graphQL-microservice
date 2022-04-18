@@ -1,4 +1,3 @@
-import { buildServiceName } from './helper';
 import {
   DeploymentConfig,
   ImageName,
@@ -27,7 +26,7 @@ export const imageMap = new Map([
 ]);
 
 const buildServiceUrl = (name: string, port: number, isGrpc: boolean) => {
-  const serviceUrl = `${buildServiceName(name)}:${port}`;
+  const serviceUrl = `${name}:${port}`;
   return isGrpc ? serviceUrl : `http://${serviceUrl}`;
 };
 export const deploymentInputs: Partial<DeploymentConfig>[] = [

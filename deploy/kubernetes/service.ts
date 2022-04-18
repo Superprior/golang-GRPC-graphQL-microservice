@@ -1,17 +1,15 @@
 import * as k8s from '@pulumi/kubernetes';
 import { ServiceConfig } from '../types';
-import { buildServiceName } from './helper';
 
 export const buildService = (config: ServiceConfig) => {
   const { name, namespace, ports, cluster } = config;
   const imageLabels = { app: name };
-  const serviceName = buildServiceName(name);
 
   return new k8s.core.v1.Service(
-    serviceName,
+    `${name}-service`,
     {
       metadata: {
-        name: serviceName,
+        name,
         namespace: namespace.metadata.apply((nm) => nm.name),
         labels: imageLabels
       },

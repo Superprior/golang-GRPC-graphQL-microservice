@@ -1,1 +1,0 @@
-export const buildServiceName = (name: string) => `${name}-service`;
