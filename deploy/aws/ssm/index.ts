@@ -7,7 +7,7 @@ const getParam = (name: string) => {
 };
 
 const AwsSSM = {
-    getParam
+  getParam
 };
 
 export default AwsSSM;

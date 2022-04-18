@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@pulumi/kubernetes-ingress-nginx": "^0.0.1"
+  }
+}
