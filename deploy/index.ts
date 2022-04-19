@@ -48,7 +48,7 @@ const [, , , gatewayService] = serviceInputs.map((serv) => {
 AwsIngress.createController(cluster);
 
 // Build Ingress
-new k8s.networking.v1.Ingress(
+const ingress = new k8s.networking.v1.Ingress(
   'ingress-game',
   {
     metadata: {
@@ -86,3 +86,6 @@ new k8s.networking.v1.Ingress(
   },
   { provider: cluster.provider }
 );
+
+export const ingressUrl = ingress.status.loadBalancer.ingress[0].hostname;
+// const elbHostedZoneId = aws.elb.getHostedZoneId().id;
