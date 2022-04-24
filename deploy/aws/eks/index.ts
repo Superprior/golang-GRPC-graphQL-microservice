@@ -9,9 +9,11 @@ const createCluster = () => {
   const vpc = createVPC();
   return new eks.Cluster(`${projectName}-cluster`, {
     vpcId: vpc.id,
-    subnetIds: vpc.publicSubnetIds,
+    enabledClusterLogTypes: ['api', 'audit', 'controllerManager'],
+    publicSubnetIds: vpc.publicSubnetIds,
+    privateSubnetIds: vpc.privateSubnetIds,
     instanceType: 't2.medium',
-    version: '1.12',
+    version: '1.20',
     nodeRootVolumeSize: 200,
     desiredCapacity: 3,
     maxSize: 4,

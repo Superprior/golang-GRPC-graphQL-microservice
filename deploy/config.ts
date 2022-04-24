@@ -22,7 +22,8 @@ export const KUBERNETES_SERVICE_PORT = config.requireNumber(
 );
 export const GRAPHQL_PATH = config.require('graphql_path');
 export const SALT_ROUNDS = AwsSSM.getParam('PASSWORD_SALT_ROUNDS');
-export const SECRET_KEY = AwsSSM.getParam('JWT_SECRET_KET');
+export const SECRET_KEY = AwsSSM.getParam('JWT_SECRET_KEY');
 export const JWT_ALGORITHM = config.require('jwt_algorithm');
 export const JWT_EXPIRATION = config.require('jwt_expiration');
 export const NODE_ENV = config.require('node_env');
+export const DOMAIN_NAME = config.require('domain_name');

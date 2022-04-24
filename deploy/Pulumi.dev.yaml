@@ -16,4 +16,5 @@ config:
   grpc-graphql-kubernetes-microservice:user_service_url: "user-service:3001"
   grpc-graphql-kubernetes-microservice:post_service_url: "http://post-service:3002"
   grpc-graphql-kubernetes-microservice:post_service_url: "http://comment-service:3003"
+  grpc-graphql-kubernetes-microservice:domain_name: "thelexeme.net"
 

@@ -1,5 +1,6 @@
 import * as pulumi from '@pulumi/pulumi';
 import * as k8s from '@pulumi/kubernetes';
+import * as aws from '@pulumi/aws';
 import Image from './docker/image';
 import AwsEcr from './aws/ecr';
 import AwsEks from './aws/eks';
@@ -14,6 +15,30 @@ import {
 } from './kubernetes';
 import { DeploymentConfig, ServiceConfig, StackInput } from './types';
 import * as config from './config';
+
+const createAliasRecord = (
+  ingressStatus: k8s.types.output.networking.v1.IngressStatus,
+  domain: string
+) => {
+  const domainHostedZoneId = aws.route53
+    .getZone({ name: domain }, { async: true })
+    .then((zone) => zone.id);
+
+  const albHostedZoneId = aws.elb.getHostedZoneId().then((zone) => zone.id);
+
+  return new aws.route53.Record(domain, {
+    name: domain,
+    zoneId: domainHostedZoneId,
+    type: 'A',
+    aliases: [
+      {
+        name: ingressStatus.loadBalancer.ingress[0].hostname,
+        zoneId: albHostedZoneId,
+        evaluateTargetHealth: false
+      }
+    ]
+  });
+};
 
 const projectName = pulumi.getProject();
 const cluster = AwsEks.createCluster();
@@ -44,48 +69,37 @@ const [, , , gatewayService] = serviceInputs.map((serv) => {
   return buildService({ ...serv, namespace, cluster } as ServiceConfig);
 });
 
-// Build Ingress Controller
-AwsIngress.createController(cluster);
-
-// Build Ingress
-const ingress = new k8s.networking.v1.Ingress(
-  'ingress-game',
+const ingressRules = [
   {
-    metadata: {
-      name: '2048-ingress',
-      namespace: '2048-game',
-      annotations: {
-        'kubernetes.io/ingress.class': 'alb',
-        'alb.ingress.kubernetes.io/scheme': 'internet-facing'
-      },
-      labels: { app: '2048-ingress' }
-    },
-    spec: {
-      rules: [
+    host: 'eseerigha.com',
+    http: {
+      paths: [
         {
-          host: 'eseerigha.com',
-          http: {
-            paths: [
-              {
-                pathType: 'Prefix',
-                path: '/graphql',
-                backend: {
-                  service: {
-                    name: gatewayService.metadata.apply(
-                      (service) => service.name
-                    ),
-                    port: { number: config.KUBERNETES_SERVICE_PORT }
-                  }
-                }
-              }
-            ]
+          pathType: 'Prefix',
+          path: '/graphql',
+          backend: {
+            service: {
+              name: gatewayService.metadata.apply((service) => service.name),
+              port: { number: config.KUBERNETES_SERVICE_PORT }
+            }
           }
         }
       ]
     }
-  },
-  { provider: cluster.provider }
+  }
+];
+
+// Build Ingress Controller
+AwsIngress.createController(cluster);
+
+// Build Ingress
+const ingress = AwsIngress.createIngress(
+  projectName,
+  namespace,
+  ingressRules,
+  cluster
 );
 
-export const ingressUrl = ingress.status.loadBalancer.ingress[0].hostname;
-// const elbHostedZoneId = aws.elb.getHostedZoneId().id;
+export const aRecord = ingress.status.apply((s) =>
+  createAliasRecord(s, config.DOMAIN_NAME)
+);
