@@ -1,10 +1,10 @@
 import * as pulumi from '@pulumi/pulumi';
 import * as k8s from '@pulumi/kubernetes';
 import * as aws from '@pulumi/aws';
+import { createCluster } from './aws/eks';
 import Image from './docker/image';
-import AwsEcr from './aws/ecr';
-import AwsEks from './aws/eks';
-import AwsIngress from './aws/ingress';
+import { buildRegistry, buildRepository } from './aws/ecr';
+import { createController, createIngress } from './aws/ingress';
 import {
   buildDeployment,
   buildService,
@@ -41,10 +41,10 @@ const createAliasRecord = (
 };
 
 const projectName = pulumi.getProject();
-const cluster = AwsEks.createCluster();
+const cluster = createCluster();
 const namespace = createNamespace(cluster);
-const ecrRepo = AwsEcr.buildRepository(`${projectName}-repository`);
-const ecrRegistry = AwsEcr.buildRegistry(ecrRepo);
+const ecrRepo = buildRepository(`${projectName}-repository`);
+const ecrRegistry = buildRegistry(ecrRepo);
 const stackInput: StackInput = {
   registry: ecrRegistry,
   timestamp: new Date().getTime(),
@@ -90,15 +90,10 @@ const ingressRules = [
 ];
 
 // Build Ingress Controller
-AwsIngress.createController(cluster);
+createController(cluster);
 
 // Build Ingress
-const ingress = AwsIngress.createIngress(
-  projectName,
-  namespace,
-  ingressRules,
-  cluster
-);
+const ingress = createIngress(projectName, namespace, ingressRules, cluster);
 
 // Create A record
 export const aRecord = ingress.status.apply((s) =>

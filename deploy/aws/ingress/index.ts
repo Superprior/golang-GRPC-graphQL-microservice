@@ -20,7 +20,7 @@ const createNodeInstanceRole = (
   );
 };
 
-const createController = (cluster: eks.Cluster) => {
+export const createController = (cluster: eks.Cluster) => {
   const policy = createIngressPolicy();
   createNodeInstanceRole(policy, cluster);
 
@@ -42,7 +42,7 @@ const createController = (cluster: eks.Cluster) => {
   );
 };
 
-const createIngress = (
+export const createIngress = (
   projectName: string,
   namespace: k8s.core.v1.Namespace,
   rules: pulumi.Input<
@@ -70,10 +70,3 @@ const createIngress = (
     { provider: cluster.provider }
   );
 };
-
-const AwsIngress = {
-  createController,
-  createIngress
-};
-
-export default AwsIngress;

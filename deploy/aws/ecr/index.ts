@@ -67,7 +67,7 @@ const buildImageLifecyclePolicy = (repo: aws.ecr.Repository) => {
   });
 };
 
-const buildRegistry = (repo: aws.ecr.Repository) => {
+export const buildRegistry = (repo: aws.ecr.Repository) => {
   // Get the repository credentials we use to push to the repository
   return repo.registryId.apply(async (registryId) => {
     const credentials = await aws.ecr.getCredentials({
@@ -81,7 +81,8 @@ const buildRegistry = (repo: aws.ecr.Repository) => {
     return { server: credentials.proxyEndpoint, username, password };
   });
 };
-const buildRepository = (name: string) => {
+
+export const buildRepository = (name: string) => {
   const repo = new aws.ecr.Repository(name, {
     imageScanningConfiguration: {
       scanOnPush: true
@@ -92,10 +93,3 @@ const buildRepository = (name: string) => {
   buildImageLifecyclePolicy(repo);
   return repo;
 };
-
-const AwsEcr = {
-  buildRepository,
-  buildRegistry
-};
-
-export default AwsEcr;
