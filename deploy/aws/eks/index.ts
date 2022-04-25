@@ -1,6 +1,7 @@
 import * as pulumi from '@pulumi/pulumi';
 import * as awsx from '@pulumi/awsx';
 import * as eks from '@pulumi/eks';
+import * as config from '../../config';
 
 const projectName = pulumi.getProject();
 
@@ -21,6 +22,9 @@ const createCluster = () => {
     deployDashboard: false,
     vpcCniOptions: {
       warmIpTarget: 4
+    },
+    providerCredentialOpts: {
+      profileName: config.AWS_PROFILE_NAME
     }
   });
 };

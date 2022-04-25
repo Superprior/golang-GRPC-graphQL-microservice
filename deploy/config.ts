@@ -27,3 +27,4 @@ export const JWT_ALGORITHM = config.require('jwt_algorithm');
 export const JWT_EXPIRATION = config.require('jwt_expiration');
 export const NODE_ENV = config.require('node_env');
 export const DOMAIN_NAME = config.require('domain_name');
+export const AWS_PROFILE_NAME = config.require('aws_profile');

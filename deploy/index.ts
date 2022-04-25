@@ -100,6 +100,10 @@ const ingress = AwsIngress.createIngress(
   cluster
 );
 
+// Create A record
 export const aRecord = ingress.status.apply((s) =>
   createAliasRecord(s, config.DOMAIN_NAME)
 );
+
+// Export the cluster's kubeconfig.
+export const kubeconfig = cluster.kubeconfig;

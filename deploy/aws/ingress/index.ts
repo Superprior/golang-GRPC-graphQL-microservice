@@ -25,11 +25,13 @@ const createController = (cluster: eks.Cluster) => {
   createNodeInstanceRole(policy, cluster);
 
   // Declare the ALBIngressController in 1 step with the Helm Chart.
-  return new k8s.helm.v2.Chart(
-    'alb',
+  return new k8s.helm.v3.Chart(
+    'aws-load-balancer-controller',
     {
-      chart:
-        'http://storage.googleapis.com/kubernetes-charts-incubator/aws-alb-ingress-controller-0.1.9.tgz',
+      chart: 'eks/aws-load-balancer-controller',
+      fetchOpts: {
+        repo: 'https://aws.github.io/eks-charts'
+      },
       values: {
         clusterName: cluster.eksCluster.name,
         autoDiscoverAwsRegion: 'true',

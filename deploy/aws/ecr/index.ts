@@ -1,15 +1,16 @@
 import * as aws from '@pulumi/aws';
+import { Input } from '@pulumi/pulumi';
 import { ImageName } from '../../types';
 
 const buildRepositoryPolicy = (repo: aws.ecr.Repository) => {
   // Set a use policy for the repository
-  return new aws.ecr.RepositoryPolicy(`${repo.name}-policy`, {
-    repository: repo.id,
-    policy: JSON.stringify({
+  return new aws.ecr.RepositoryPolicy(`ecr-repository-policy`, {
+    repository: repo.name.apply((name) => name),
+    policy: {
       Version: '2012-10-17',
       Statement: [
         {
-          Sid: 'new policy',
+          Sid: 'ECR policy',
           Effect: 'Allow',
           Principal: '*',
           Action: [
@@ -30,7 +31,7 @@ const buildRepositoryPolicy = (repo: aws.ecr.Repository) => {
           ]
         }
       ]
-    })
+    }
   });
 };
 
@@ -45,20 +46,24 @@ const buildImageLifecyclePolicy = (repo: aws.ecr.Repository) => {
     rulePriority: 1,
     description: 'Keep only two tagged image, expire all others',
     selection: {
-      tagStatus: 'tagged',
+      tagStatus: 'tagged' as Input<'tagged' | 'untagged' | 'any'>,
       tagPrefixList: [tag],
-      countType: 'imageCountMoreThan',
+      countType: 'imageCountMoreThan' as Input<
+        'imageCountMoreThan' | 'sinceImagePushed'
+      >,
       countNumber: 2
     },
     action: {
-      type: 'expire'
+      type: 'expire' as Input<'expire'>
     }
   }));
 
   // Set a policy to control the lifecycle of an image
-  new aws.ecr.LifecyclePolicy(`${repo.name}-lifecyclepolicy`, {
-    repository: repo.id,
-    policy: JSON.stringify({ rules })
+  new aws.ecr.LifecyclePolicy(`ecr-lifecycle-policy`, {
+    repository: repo.name.apply((name) => name),
+    policy: {
+      rules
+    }
   });
 };
 
