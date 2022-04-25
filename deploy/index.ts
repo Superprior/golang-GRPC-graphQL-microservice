@@ -1,7 +1,7 @@
 import * as pulumi from '@pulumi/pulumi';
 import * as k8s from '@pulumi/kubernetes';
 import * as aws from '@pulumi/aws';
-import { createCluster } from './aws/eks';
+import { createCluster, createVpc } from './aws/eks';
 import Image from './docker/image';
 import { buildRegistry, buildRepository } from './aws/ecr';
 import { createController, createIngress } from './aws/ingress';
@@ -41,7 +41,8 @@ const createAliasRecord = (
 };
 
 const projectName = pulumi.getProject();
-const cluster = createCluster();
+const vpc = createVpc();
+const cluster = createCluster(vpc);
 const namespace = createNamespace(cluster);
 const ecrRepo = buildRepository(`${projectName}-repository`);
 const ecrRegistry = buildRegistry(ecrRepo);
@@ -90,7 +91,7 @@ const ingressRules = [
 ];
 
 // Build Ingress Controller
-createController(cluster);
+createController(cluster, vpc);
 
 // Build Ingress
 const ingress = createIngress(projectName, namespace, ingressRules, cluster);
@@ -102,3 +103,9 @@ export const aRecord = ingress.status.apply((s) =>
 
 // Export the cluster's kubeconfig.
 export const kubeconfig = cluster.kubeconfig;
+export const clusterName = cluster.eksCluster.name;
+export const vpcId = vpc.id;
+
+// pulumi stack output kubeconfig | tee ~/.kube/config
+// export const clusterOidcProvider = cluster.core.oidcProvider?.url
+// export const clusterOidcProviderArn = cluster.core.oidcProvider?.arn

@@ -1,10 +1,17 @@
 import * as pulumi from '@pulumi/pulumi';
 import * as aws from '@pulumi/aws';
 import * as eks from '@pulumi/eks';
+import * as awsx from '@pulumi/awsx';
 import * as k8s from '@pulumi/kubernetes';
+import * as config from '../../config';
 import { createIngressPolicy } from './policy';
 
 const projectName = pulumi.getProject();
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const helmChartTransformation = (obj: any) => {
+  if (obj['kind'] === 'CustomResourceDefinition') delete obj['status'];
+};
 
 // Attach this policy to the NodeInstanceRole of the worker nodes.
 const createNodeInstanceRole = (
@@ -20,7 +27,7 @@ const createNodeInstanceRole = (
   );
 };
 
-export const createController = (cluster: eks.Cluster) => {
+export const createController = (cluster: eks.Cluster, vpc: awsx.ec2.Vpc) => {
   const policy = createIngressPolicy();
   createNodeInstanceRole(policy, cluster);
 
@@ -28,15 +35,22 @@ export const createController = (cluster: eks.Cluster) => {
   return new k8s.helm.v3.Chart(
     'aws-load-balancer-controller',
     {
-      chart: 'eks/aws-load-balancer-controller',
+      chart: 'aws-load-balancer-controller',
       fetchOpts: {
         repo: 'https://aws.github.io/eks-charts'
       },
       values: {
         clusterName: cluster.eksCluster.name,
-        autoDiscoverAwsRegion: 'true',
-        autoDiscoverAwsVpcID: 'true'
-      }
+        // autoDiscoverAwsRegion: 'true',
+        // autoDiscoverAwsVpcID: 'true',
+        region: config.AWS_REGION,
+        vpcId: vpc.id,
+        podLabels: {
+          stack: pulumi.getStack(),
+          app: 'aws-lb-controller'
+        }
+      },
+      transformations: [helmChartTransformation]
     },
     { provider: cluster.provider }
   );
