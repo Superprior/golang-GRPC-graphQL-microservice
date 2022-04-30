@@ -2,9 +2,12 @@ import * as aws from '@pulumi/aws';
 import { Input } from '@pulumi/pulumi';
 import { ImageName } from '../../types';
 
-const buildRepositoryPolicy = (repo: aws.ecr.Repository) => {
+const buildRepositoryPolicy = (
+  projectName: string,
+  repo: aws.ecr.Repository
+) => {
   // Set a use policy for the repository
-  return new aws.ecr.RepositoryPolicy(`ecr-repository-policy`, {
+  return new aws.ecr.RepositoryPolicy(`${projectName}-ecr-repository-policy`, {
     repository: repo.name.apply((name) => name),
     policy: {
       Version: '2012-10-17',
@@ -35,7 +38,10 @@ const buildRepositoryPolicy = (repo: aws.ecr.Repository) => {
   });
 };
 
-const buildImageLifecyclePolicy = (repo: aws.ecr.Repository) => {
+const buildImageLifecyclePolicy = (
+  projectName: string,
+  repo: aws.ecr.Repository
+) => {
   const imageTags = [
     ImageName.USER_SERVICE,
     ImageName.POST_SERVICE,
@@ -59,7 +65,7 @@ const buildImageLifecyclePolicy = (repo: aws.ecr.Repository) => {
   }));
 
   // Set a policy to control the lifecycle of an image
-  new aws.ecr.LifecyclePolicy(`ecr-lifecycle-policy`, {
+  new aws.ecr.LifecyclePolicy(`${projectName}-ecr-lifecycle-policy`, {
     repository: repo.name.apply((name) => name),
     policy: {
       rules
@@ -82,14 +88,14 @@ export const buildRegistry = (repo: aws.ecr.Repository) => {
   });
 };
 
-export const buildRepository = (name: string) => {
-  const repo = new aws.ecr.Repository(name, {
+export const buildRepository = (projectName: string) => {
+  const repo = new aws.ecr.Repository(`${projectName}-repository`, {
     imageScanningConfiguration: {
       scanOnPush: true
     },
     imageTagMutability: 'MUTABLE'
   });
-  buildRepositoryPolicy(repo);
-  buildImageLifecyclePolicy(repo);
+  buildRepositoryPolicy(projectName, repo);
+  buildImageLifecyclePolicy(projectName, repo);
   return repo;
 };

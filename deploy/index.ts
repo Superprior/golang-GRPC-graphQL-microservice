@@ -44,7 +44,7 @@ const projectName = pulumi.getProject();
 const vpc = createVpc();
 const cluster = createCluster(vpc);
 const namespace = createNamespace(cluster);
-const ecrRepo = buildRepository(`${projectName}-repository`);
+const ecrRepo = buildRepository(`${projectName}`);
 const ecrRegistry = buildRegistry(ecrRepo);
 const stackInput: StackInput = {
   registry: ecrRegistry,
