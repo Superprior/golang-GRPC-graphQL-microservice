@@ -1,6 +1,4 @@
 import * as aws from '@pulumi/aws';
-import * as eks from '@pulumi/eks';
-import * as k8s from '@pulumi/kubernetes';
 import * as pulumi from '@pulumi/pulumi';
 
 const projectName = pulumi.getProject();

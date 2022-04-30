@@ -7,7 +7,7 @@ const buildContext = (name: string, type: ImageType) => {
     type === ImageType.MICROSERVICE
       ? `../../microservices/${name}`
       : `../../api-gateway`;
-  return path.resolve(imagePath);
+  return path.resolve(__dirname, imagePath);
 };
 
 const build = (input: ImageInput) => {

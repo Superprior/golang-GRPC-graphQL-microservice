@@ -48,8 +48,8 @@ const buildImageLifecyclePolicy = (
     ImageName.COMMENT_SERVICE,
     ImageName.GATEWAY_SERVICE
   ];
-  const rules = imageTags.map((tag) => ({
-    rulePriority: 1,
+  const rules = imageTags.map((tag, index) => ({
+    rulePriority: index + 1,
     description: 'Keep only two tagged image, expire all others',
     selection: {
       tagStatus: 'tagged' as Input<'tagged' | 'untagged' | 'any'>,
