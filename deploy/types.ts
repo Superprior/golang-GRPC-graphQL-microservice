@@ -21,7 +21,6 @@ interface StackDefinition {
 
 export interface StackInput extends StackDefinition {
   timestamp: number;
-  registry: docker.ImageRegistry;
 }
 
 export type ImageInput = StackInput & {

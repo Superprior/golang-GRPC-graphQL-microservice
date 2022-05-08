@@ -2,8 +2,8 @@ import * as pulumi from '@pulumi/pulumi';
 import * as k8s from '@pulumi/kubernetes';
 import * as aws from '@pulumi/aws';
 import { createCluster, createVpc } from './aws/eks';
-import Image from './docker/image';
-import { buildRegistry, buildRepository } from './aws/ecr';
+import { buildImage } from './docker/image';
+import { buildRepository } from './aws/ecr';
 import { createController, createIngress } from './aws/ingress';
 import {
   buildDeployment,
@@ -45,9 +45,8 @@ const vpc = createVpc();
 const cluster = createCluster(vpc);
 const namespace = createNamespace(cluster);
 const ecrRepo = buildRepository(`${projectName}`);
-const ecrRegistry = buildRegistry(ecrRepo);
+// const ecrRegistry = buildRegistry(ecrRepo);
 const stackInput: StackInput = {
-  registry: ecrRegistry,
   timestamp: new Date().getTime(),
   stack: pulumi.getStack()
 };
@@ -56,7 +55,7 @@ const stackInput: StackInput = {
 deploymentInputs.map((dep) => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const imageConfig = imageMap.get(dep.name!)!;
-  const image = Image.build({ ...imageConfig, ...stackInput });
+  const image = buildImage({ ...imageConfig, ...stackInput });
   return buildDeployment({
     ...dep,
     image,
@@ -72,7 +71,7 @@ const [, , , gatewayService] = serviceInputs.map((serv) => {
 
 const ingressRules = [
   {
-    host: 'eseerigha.com',
+    host: 'thelexeme.net',
     http: {
       paths: [
         {
@@ -80,7 +79,7 @@ const ingressRules = [
           path: '/graphql',
           backend: {
             service: {
-              name: gatewayService.metadata.apply((service) => service.name),
+              name: gatewayService.metadata.name,
               port: { number: config.KUBERNETES_SERVICE_PORT }
             }
           }
@@ -105,6 +104,7 @@ export const aRecord = ingress.status.apply((s) =>
 export const kubeconfig = cluster.kubeconfig;
 export const clusterName = cluster.eksCluster.name;
 export const vpcId = vpc.id;
+export const ecrRepoName = ecrRepo.name;
 
 // pulumi stack output kubeconfig | tee ~/.kube/config
 // export const clusterOidcProvider = cluster.core.oidcProvider?.url

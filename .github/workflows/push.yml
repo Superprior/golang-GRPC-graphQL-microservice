@@ -2,7 +2,7 @@ name: Pulumi
 on:
   push:
     branches:
-      - release
+      - main
 
 env:
   PULUMI_DIRECTORY: ./deploy
@@ -12,7 +12,17 @@ jobs:
     name: Update
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.8'
+
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '>=1.18.1'
 
       - name: Setup Node.js 16
         uses: actions/setup-node@v2
@@ -30,11 +40,21 @@ jobs:
         run: yarn install --frozen-lockfile
         working-directory: ${{ env.PULUMI_DIRECTORY  }}
 
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Configure ECR
+        id: ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
       - name: Deploy
         uses: pulumi/actions@v3
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
         with:
           work-dir: ${{ env.PULUMI_DIRECTORY  }}
-          command: preview
+          command: up
           stack-name: dev

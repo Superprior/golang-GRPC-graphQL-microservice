@@ -10,19 +10,14 @@ const buildContext = (name: string, type: ImageType) => {
   return path.resolve(__dirname, imagePath);
 };
 
-const build = (input: ImageInput) => {
-  const { stack, timestamp, name, registry, type } = input;
+export const buildImage = (input: ImageInput) => {
+  const { stack, timestamp, name, type } = input;
   const context = buildContext(name, type);
   return new docker.Image(`${name}`, {
     build: {
-      context
+      context,
+      extraOptions: ['--quiet'] // Fixes https://github.com/pulumi/pulumi-docker/issues/289
     },
-    imageName: `${stack}:${name}-${timestamp}`,
-    registry
+    imageName: `${stack}:${name}-${timestamp}`
   });
 };
-const Image = {
-  build
-};
-
-export default Image;

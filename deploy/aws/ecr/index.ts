@@ -73,20 +73,20 @@ const buildImageLifecyclePolicy = (
   });
 };
 
-export const buildRegistry = (repo: aws.ecr.Repository) => {
-  // Get the repository credentials we use to push to the repository
-  return repo.registryId.apply(async (registryId) => {
-    const credentials = await aws.ecr.getCredentials({
-      registryId: registryId
-    });
-    const decodedCredentials = Buffer.from(
-      credentials.authorizationToken,
-      'base64'
-    ).toString();
-    const [username, password] = decodedCredentials.split(':');
-    return { server: credentials.proxyEndpoint, username, password };
-  });
-};
+// export const buildRegistry = (repo: aws.ecr.Repository) => {
+//   // Get the repository credentials we use to push to the repository
+//   return repo.registryId.apply(async (registryId) => {
+//     const credentials = await aws.ecr.getCredentials({
+//       registryId: registryId
+//     });
+//     const decodedCredentials = Buffer.from(
+//       credentials.authorizationToken,
+//       'base64'
+//     ).toString();
+//     const [username, password] = decodedCredentials.split(':');
+//     return { server: credentials.proxyEndpoint, username, password };
+//   });
+// };
 
 export const buildRepository = (projectName: string) => {
   const repo = new aws.ecr.Repository(`${projectName}-repository`, {
