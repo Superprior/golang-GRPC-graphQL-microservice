@@ -30,7 +30,8 @@ const buildRepositoryPolicy = (
             'ecr:DeleteRepository',
             'ecr:BatchDeleteImage',
             'ecr:SetRepositoryPolicy',
-            'ecr:DeleteRepositoryPolicy'
+            'ecr:DeleteRepositoryPolicy',
+            'ecr:GetAuthorizationToken'
           ]
         }
       ]

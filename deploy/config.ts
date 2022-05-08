@@ -1,6 +1,7 @@
 import * as pulumi from '@pulumi/pulumi';
 import AwsSSM from './aws/ssm';
 const config = new pulumi.Config();
+const awsConfig = new pulumi.Config('aws');
 
 export const USER_SERVICE_CONTAINER_PORT = config.requireNumber(
   'user_service_container_port'
@@ -27,5 +28,5 @@ export const JWT_ALGORITHM = config.require('jwt_algorithm');
 export const JWT_EXPIRATION = config.require('jwt_expiration');
 export const NODE_ENV = config.require('node_env');
 export const DOMAIN_NAME = config.require('domain_name');
-export const AWS_PROFILE_NAME = config.require('aws_profile');
-export const AWS_REGION = config.require('aws_region');
+export const AWS_PROFILE_NAME = awsConfig.get('profile');
+export const AWS_REGION = awsConfig.get('region');

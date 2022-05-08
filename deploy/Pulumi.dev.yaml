@@ -1,8 +1,6 @@
 config:
   aws:profile: default
   aws:region: eu-west-2
-  project-tango:aws_profile: "default"
-  project-tango:aws_region: "eu-west-2"
   project-tango:domain_name: "thelexeme.net"
   project-tango:graphql_path: "/graphql"
   project-tango:jwt_algorithm: "HS256"
