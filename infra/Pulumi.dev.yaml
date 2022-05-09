@@ -1,5 +1,6 @@
 config:
   aws:region: eu-west-2
+  pulumi:template: aws-typescript
   project-tango:domain_name: "thelexeme.net"
   project-tango:graphql_path: "/graphql"
   project-tango:jwt_algorithm: "HS256"

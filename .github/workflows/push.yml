@@ -5,11 +5,11 @@ on:
       - main
 
 env:
-  PULUMI_DIRECTORY: ./deploy
+  PULUMI_DIRECTORY: ./infra
 
 jobs:
   update:
-    name: Update
+    name: Pipeline
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
