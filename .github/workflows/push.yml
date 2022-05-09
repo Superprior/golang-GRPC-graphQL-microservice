@@ -50,6 +50,10 @@ jobs:
         id: ecr
         uses: aws-actions/amazon-ecr-login@v1
 
+      - name: Downgrade kubectl version (TEMPORARY SOLUTION)
+        run: |
+          sudo apt-get install -y curl awscli && curl -LO https://dl.k8s.io/release/v1.23.6/bin/linux/amd64/kubectl && sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+          
       - name: Deploy
         uses: pulumi/actions@v3
         env:
