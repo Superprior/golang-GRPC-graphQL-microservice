@@ -1,4 +1,5 @@
 import * as docker from '@pulumi/docker';
+import * as aws from '@pulumi/aws';
 import * as k8s from '@pulumi/kubernetes';
 import * as eks from '@pulumi/eks';
 import { Input } from '@pulumi/pulumi';
@@ -21,6 +22,7 @@ interface StackDefinition {
 
 export interface StackInput extends StackDefinition {
   timestamp: number;
+  repo: aws.ecr.Repository;
 }
 
 export type ImageInput = StackInput & {

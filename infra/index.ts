@@ -48,7 +48,8 @@ const ecrRepo = buildRepository(`${projectName}`);
 // const ecrRegistry = buildRegistry(ecrRepo);
 const stackInput: StackInput = {
   timestamp: new Date().getTime(),
-  stack: pulumi.getStack()
+  stack: pulumi.getStack(),
+  repo: ecrRepo
 };
 
 //Build Deployments
