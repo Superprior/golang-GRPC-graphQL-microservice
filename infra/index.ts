@@ -72,7 +72,6 @@ const [, , , gatewayService] = serviceInputs.map((serv) => {
 
 const ingressRules = [
   {
-    host: 'thelexeme.net',
     http: {
       paths: [
         {

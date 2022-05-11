@@ -14,7 +14,7 @@ export const buildDeployment = (config: DeploymentConfig) => {
       spec: {
         strategy: { type: 'RollingUpdate' },
         selector: { matchLabels: imageLabels },
-        replicas: 3,
+        replicas: 2,
         template: {
           metadata: { labels: imageLabels },
           spec: {
